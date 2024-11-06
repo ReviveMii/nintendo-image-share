@@ -112,7 +112,7 @@ class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                         f.write(file_item.file.read())
 
                     download_url = f"http://{self.headers['Host']}/download/{file_id}"
-                    qr_code_url = f"https://api.qrserver.com/v1/create-qr-code/?data={urllib.parse.quote(download_url)}&size=150x150"
+                    qr_code_url = f"http://api.qrserver.com/v1/create-qr-code/?data={urllib.parse.quote(download_url)}&size=150x150"
 
                     self.send_response(200)
                     self.send_header('Content-type', 'text/html; charset=utf-8')
