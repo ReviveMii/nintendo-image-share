@@ -1,5 +1,4 @@
 import http.server
-import ssl
 import cgi
 import os
 import random
@@ -112,7 +111,7 @@ class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     with open(file_path, "wb") as f:
                         f.write(file_item.file.read())
 
-                    download_url = f"https://{self.headers['Host']}/download/{file_id}"
+                    download_url = f"http://{self.headers['Host']}/download/{file_id}"
                     qr_code_url = f"https://api.qrserver.com/v1/create-qr-code/?data={urllib.parse.quote(download_url)}&size=150x150"
 
                     self.send_response(200)
@@ -123,8 +122,8 @@ class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                         <html lang="en">
                         <head>
                             <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1" />                            
-<title>Upload Successful</title>
+                            <meta name="viewport" content="width=device-width, initial-scale=1" />
+                            <title>Upload Successful</title>
                             <style>
                                 body {{ font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; }}
                                 .container {{ width: 90%; max-width: 400px; margin: 0 auto; padding: 20px; background: #ffffff; border: 2px solid #ddd; }}
@@ -156,11 +155,6 @@ class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             else:
                 self.send_error(400, "Invalid request.")
 
-context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-context.load_cert_chain(certfile='/path/to/fullchain.pem',
-                        keyfile='/path/to/privkey.pem')
-
 with TCPServer(('0.0.0.0', 25581), SimpleHTTPRequestHandler) as httpd:
-    httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
-    print("Serving on https://revivemii.fr.to:25581")
+    print("Serving on http://0.0.0.0:25581")
     httpd.serve_forever()
