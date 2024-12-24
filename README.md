@@ -1,3 +1,8 @@
+# Warning!!!!
+This Project is archived.
+
+Alternatives: http://i.retrosite.org/, http://theimageshare.com
+
 # About
 This is the Source Code of the Nintendo Image Share Revival: ReviveMii Image Share
 # How to use
